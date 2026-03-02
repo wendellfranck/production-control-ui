@@ -27,27 +27,29 @@ export default function Production({ refreshKey }) {
         <p>No production possible with current stock.</p>
       ) : (
         <>
-          <table border="1">
-            <thead>
-              <tr>
-                <th>Product</th>
-                <th>Quantity</th>
-                <th>Unit Value</th>
-                <th>Total Value</th>
-              </tr>
-            </thead>
-            <tbody>
-              {data.suggestions.map(item => (
-                <tr key={item.productId}>
-                  <td>{item.productName}</td>
-                  <td>{item.quantityCanProduce}</td>
-                  <td>{item.productValue}</td>
-                  <td>{item.totalValue}</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-
+          <div className="table-wrapper">
+            <table border="1">
+                <thead>
+                  <tr>
+                    <th>Product</th>
+                    <th>Quantity</th>
+                    <th>Unit Value</th>
+                    <th>Total Value</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {data.suggestions.map(item => (
+                    <tr key={item.productId}>
+                      <td>{item.productName}</td>
+                      <td>{item.quantityCanProduce}</td>
+                      <td>{item.productValue}</td>
+                      <td>{item.totalValue}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          
           <h3>Total Production Value: {data.totalProductionValue}</h3>
         </>
       )}

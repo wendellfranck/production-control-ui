@@ -7,14 +7,18 @@ function App() {
   const [refreshKey, setRefreshKey] = useState(0);
 
   return (
-    <div className="container">
+    <div className="app-container">
       <h1>Production Control System</h1>
 
-      <Products onChange={() => setRefreshKey(prev => prev + 1)}/>
-      <hr />
-      <RawMaterials onChange={() => setRefreshKey(prev => prev + 1)} />
-      <hr />
-      <Production refreshKey={refreshKey} />
+      <div className="card">
+        <Products onChange={() => setRefreshKey(prev => prev + 1)}/>
+      </div>
+      <div className="card">
+        <RawMaterials onChange={() => setRefreshKey(prev => prev + 1)} />
+      </div>
+      <div className="card">
+        <Production refreshKey={refreshKey} />
+      </div>  
     </div>
   );
 }

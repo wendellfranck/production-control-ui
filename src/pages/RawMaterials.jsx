@@ -68,39 +68,41 @@ export default function RawMaterials({ onChange }) {
       <button onClick={() => setIsModalOpen(true)}>
         Add Raw Material
       </button>
-
-      <table border="1">
-        <thead>
-          <tr>
-            <th>Code</th>
-            <th>Name</th>
-            <th>Stock</th>
-            <th>Actions</th>
-          </tr>
-        </thead>
-        <tbody>
-          {materials.map(material => (
-            <tr key={material.id}>
-              <td>{material.code}</td>
-              <td>{material.name}</td>
-              <td>{material.stockQuantity}</td>
-              <td>
-                <button onClick={() => handleEdit(material)}>Edit</button>
-                <button
-                  className="delete"
-                  onClick={async () => {
-                    await api.delete(`/raw-materials/${material.id}`);
-                    loadMaterials();
-                    if (onChange) onChange();
-                  }}
-                >
-                  Delete
-                </button>
-              </td>
+      <div className="table-wrapper">
+        <table border="1">
+          <thead>
+            <tr>
+              <th>Code</th>
+              <th>Name</th>
+              <th>Stock</th>
+              <th>Actions</th>
             </tr>
-          ))}
-        </tbody>
-      </table>
+          </thead>
+          <tbody>
+            {materials.map(material => (
+              <tr key={material.id}>
+                <td>{material.code}</td>
+                <td>{material.name}</td>
+                <td>{material.stockQuantity}</td>
+                <td>
+                  <button onClick={() => handleEdit(material)}>Edit</button>
+                  <button
+                    className="delete"
+                    onClick={async () => {
+                      await api.delete(`/raw-materials/${material.id}`);
+                      loadMaterials();
+                      if (onChange) onChange();
+                    }}
+                  >
+                    Delete
+                  </button>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+      
       {isModalOpen && (
         <Modal
           title={editingId ? "Edit Raw Material" : "Add Raw Material"}

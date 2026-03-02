@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import api from "../services/api";
 import Modal from "../components/Modal";
 
-export default function Products() {
+export default function Products({ onChange }) {
   const [products, setProducts] = useState([]);
   const [rawMaterials, setRawMaterials] = useState([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -78,6 +78,7 @@ export default function Products() {
     setIsModalOpen(false);
   
     loadProducts();
+    onChange && onChange();
   }
 
   async function handleDelete(id) {
@@ -95,56 +96,60 @@ export default function Products() {
     setProductRawMaterials(product.rawMaterials || []);
     setEditingId(product.id);
     setIsModalOpen(true);
+   
   }
   
 
   return (
-    <div>
+    <div >
       <h2>Products</h2>
   
       <button onClick={() => setIsModalOpen(true)}>
         Add Product
       </button>
-  
-      <table>
-        <thead>
-          <tr>
-            <th>Code</th>
-            <th>Name</th>
-            <th>Value</th>
-            <th>Raw Materials</th>
-            <th>Actions</th>
-          </tr>
-        </thead>
-        <tbody>
-          {products.map(product => (
-            <tr key={product.id}>
-              <td>{product.code}</td>
-              <td>{product.name}</td>
-              <td>{product.value}</td>
-              <td>
-                {product.rawMaterials?.map(rm => (
-                  <div key={rm.rawMaterialId}>
-                    {rm.rawMaterialName} ({rm.quantityRequired})
-                  </div>
-                ))}
-              </td>
-              <td>
-                <button onClick={() => handleEdit(product)}>Edit</button>
-                <button
-                  className="delete"
-                  onClick={async () => {
-                    await api.delete(`/products/${product.id}`);
-                    loadProducts();
-                  }}
-                >
-                  Delete
-                </button>
-              </td>
+      <div className="table-wrapper">
+        <table>
+          <thead>
+            <tr>
+              <th>Code</th>
+              <th>Name</th>
+              <th>Value</th>
+              <th>Raw Materials</th>
+              <th>Actions</th>
             </tr>
-          ))}
-        </tbody>
-      </table>
+          </thead>
+          <tbody>
+            {products.map(product => (
+              <tr key={product.id}>
+                <td>{product.code}</td>
+                <td>{product.name}</td>
+                <td>{product.value}</td>
+                <td>
+                  {product.rawMaterials?.map(rm => (
+                    <div key={rm.rawMaterialId}>
+                      {rm.rawMaterialName} ({rm.quantityRequired})
+                    </div>
+                  ))}
+                </td>
+                <td>
+                  <button onClick={() => handleEdit(product)}>Edit</button>
+                  <button
+                    className="delete"
+                    onClick={async () => {
+                      await api.delete(`/products/${product.id}`);
+                      loadProducts();
+                      onChange && onChange();
+                    }}
+                  >
+                    Delete
+                  </button>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+      
   
       {isModalOpen && (
         <Modal
