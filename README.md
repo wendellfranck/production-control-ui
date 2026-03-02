@@ -116,7 +116,6 @@ src/
  ├── App.jsx
  └── main.jsx
 
-
 ## 🎯 Design Decisions
 
 State lifting in App.jsx to synchronize production suggestion updates.
