@@ -126,6 +126,17 @@ Clear separation of concerns (pages vs services vs components).
 
 Minimal external dependencies for simplicity and maintainability.
 
+---
+
+## 🧪 End-to-End Testing
+
+This project includes Cypress E2E tests.
+
+To run Cypress:
+
+```bash
+npx cypress open
+```
 
 ## 📌 Author
 
